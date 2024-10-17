@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+    <!-- bootstrap CSS -->
+    <link 
+      rel="stylesheet" 
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" 
+      crossorigin="anonymous"
+    />
+
+
+   <!-- import our own stylesheet -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='/style.css') }}"
+    />
+</head>
+<body>
+    <div class="container mt-5">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <h1 class="navbar-brand">Sasquatch Websighting</h1>
+              <div class="d-flex" role="search">
+                <p>{{session["first_name"]}} {{session["last_name"]}} </p>
+                <!-- <a href class="btn btn-outline-success" type="submit">Search</a> -->
+              </div>
+            </div>
+        </nav>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand"></a>
+              <div class="d-flex" role="search">
+                <a href="/dashboard" class="btn btn-light" type="submit">Dashboard</a>
+              </div>
+            </div>
+        </nav>
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+              <h3 class="navbar-brand">Edit this Sighting</h3>
+              <div class="d-flex" role="search">
+                <a href="/logout" class="btn btn-light btn-info" type="submit">Logout</a>
+              </div>
+            </div>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                      <p>{{message}}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+        <form action="/sightings/edit/{{sighting.id}}" method="post" class="bg-light text-dark">
+          <input type="hidden" name="id" value="{{sighting.id}}"/>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="sidebar">
+                    <div class="form-group">
+                        <label for="location">Location:</label>
+                        <input type="text" name="location" id="location" class="form-control" value="{{sighting.location}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="date_of_sighting">Date of Sighting:</label>
+                        <input type="date" name="date_of_sighting" id="date_of_sighting" class="form-control" value="{{sighting.date_of_sighting}}">
+                    </div>
+                    <div class="form-floating mb-3">
+                        <label for="number_of_sasquatches">Number of Sasquatches:</label>
+                        <input type="number" name="number_of_sasquatches" id="number_of_sasquatches" min=0 max=100 value="{{sighting.number_of_sasquatches}}" >
+                    </div>
+                    <div class="form-floating mb-3">
+                        <label for="what_happened" >What Happened?:</label>
+                        <input type="textarea" name="what_happened" id="floatingTextarea2Disabled" style="height: 100px" class="form-control" value="{{sighting.what_happened}}">
+                    </div>
+                </div>
+            </div>
+            </div>
+            <input type="submit" value="Report" class="btn btn-success absolute-bottom-right">
+        </form>
+    </div>
+
+
+
+    <!-- bootstrap javascript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+    ></script>
+</body>
+</html>
